@@ -27,7 +27,7 @@ const registerUser = async (req, res, next) => {
       const jwtToken = jwt.sign(payload, secretKey);
       return res.json({"message": "success", token: jwtToken});
     }
-    return res.status(403).json({'message': 'Not authorized'});
+    return res.status(400).json({'message': 'Not authorized'});
   }
 
 module.exports = {
