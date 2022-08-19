@@ -25,7 +25,7 @@ const registerUser = async (req, res, next) => {
     if (user && await bcrypt.compare(String(req.body.password), String(user.password))) {
       const payload = { username: user.username, name: user.name, userId: user._id };
       const jwtToken = jwt.sign(payload, secretKey);
-      return res.json({"message": "success", token: jwtToken});
+      return res.json({"message": "success", "jwt_token": jwtToken});
     }
     return res.status(400).json({'message': 'Not authorized'});
   }
