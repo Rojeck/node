@@ -1,5 +1,6 @@
-const jwt = require('jsonwebtoken'),
-    {secretKey} = require('../secretKey.js');
+const jwt = require('jsonwebtoken');
+
+const secretKey = 'AlwaysClose228';
 
 const auth = (req, res, next) => {
   const  {authorization} = req.headers;
@@ -7,7 +8,7 @@ const auth = (req, res, next) => {
   if (!authorization) {
     return res.status(401).json({ 'message': 'Please, provide authorization header' });
   }
-
+  console.log("AUTHORIZATION HEADER:", authorization);
   const [, token] = authorization.split(' ');
 
   if (!token) {
@@ -18,14 +19,12 @@ const auth = (req, res, next) => {
     const tokenPayload = jwt.verify(token, secretKey);
     req.user = {
       userId: tokenPayload.userId,
-      username: tokenPayload.username,
-      name: tokenPayload.name
+      username: tokenPayload.username
     }
     next();
   } catch (err) {
     return res.status(401).json({message: err.message});
   }
-
 }
 
 module.exports = {
